@@ -66,15 +66,21 @@ public class Zoo {
         System.out.println("Name: " + name + ", City: " + city + ", N° Cages: " + NUMBER_OF_CAGES + " N° animals: " + nbrAnimals);
     }
 
-    public boolean addAnimal(Animal animal) {
-        if (searchAnimal(animal) != -1)
-            return false;
-        if (isZooFull())
-            return false;
-        animals[nbrAnimals] = animal;
-        nbrAnimals++;
-        return true;
+    public void addAnimal(Animal animal) throws ZooFullException,InvalidAgeException {
+        if (animal.getAge() < 0) {
+            throw new InvalidAgeException("Animal cannot have a negative age.");
+        }
+        if (isZooFull()) {
+            throw new ZooFullException("Zoo is full, cannot add more animals.");
+        }
+
+        if (nbrAnimals < NUMBER_OF_CAGES) {
+            animals[nbrAnimals] = animal;
+            nbrAnimals++;
+        }
+        System.out.println("Number of animals: " + nbrAnimals);
     }
+
 
     public boolean removeAnimal(Animal animal) {
         int indexAnimal = searchAnimal(animal);
@@ -139,7 +145,7 @@ public class Zoo {
         return maxSwimmingDepth;
     }
 
-    public void countDolphinsAndPenguins() {
+    public void displayNumberOfAquaticsByType() {
         int dolphinCount = 0;
         int penguinCount = 0;
 
@@ -152,7 +158,7 @@ public class Zoo {
         }
 
         System.out.println("Nombre de dauphins : " + dolphinCount);
-        System.out.println("Nombre de manchots : " + penguinCount);
+        System.out.println("Nombre de penguins : " + penguinCount);
     }
 
 
